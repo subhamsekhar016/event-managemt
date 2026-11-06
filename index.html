@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Eventra — Discover & Register for Events</title>
+  <meta name="description" content="Eventra is an event management platform to explore upcoming events, view details and register in seconds." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <script>
+    // Apply saved theme before paint to avoid a flash
+    try {
+      var t = localStorage.getItem("eventra_theme");
+      if (!t && window.matchMedia("(prefers-color-scheme: dark)").matches) t = "dark";
+      if (t) document.documentElement.setAttribute("data-theme", t);
+    } catch (e) {}
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#events">Skip to events</a>
+
+  <!-- ============ HEADER ============ -->
+  <header class="site-header" id="top">
+    <div class="container nav">
+      <a href="#top" class="logo" aria-label="Eventra home"><span class="logo-mark">E</span>Eventra</a>
+
+      <nav id="main-nav" class="nav-links" aria-label="Main navigation">
+        <a href="#featured">Featured</a>
+        <a href="#events">Events</a>
+        <a href="#how">How it works</a>
+        <a href="#" id="open-regs">My Registrations <span class="badge" id="reg-count">0</span></a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="icon-btn" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark / light mode">
+          <span class="sun">☀️</span><span class="moon">🌙</span>
+        </button>
+        <button class="icon-btn menu-btn" id="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="main-nav">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ============ HERO ============ -->
+    <section class="hero">
+      <div class="hero-bg" aria-hidden="true"><span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span></div>
+      <div class="container hero-grid">
+        <div class="hero-copy reveal">
+          <span class="pill">✨ Over 12 events this season</span>
+          <h1>Find your next <span class="gradient-text">unforgettable</span> experience.</h1>
+          <p>From tech summits to live music and food festivals — explore, discover and register for events that matter to you, all in one place.</p>
+          <div class="hero-cta">
+            <a href="#events" class="btn btn-primary">Browse Events</a>
+            <a href="#featured" class="btn btn-ghost">See Featured</a>
+          </div>
+          <ul class="stats">
+            <li><strong data-count="12">0</strong><span>Events</span></li>
+            <li><strong data-count="7">0</strong><span>Categories</span></li>
+            <li><strong data-count="5000" data-suffix="+">0</strong><span>Attendees</span></li>
+          </ul>
+        </div>
+
+        <aside class="hero-card reveal" aria-label="Next event countdown">
+          <p class="hero-card-label">⏳ Next event starts in</p>
+          <h2 id="hero-next-title">—</h2>
+          <p class="muted" id="hero-next-meta"></p>
+          <div class="countdown" id="hero-countdown" aria-live="off"></div>
+          <button class="btn btn-primary btn-block" id="hero-next-btn">View details</button>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ============ FEATURED ============ -->
+    <section class="section" id="featured">
+      <div class="container">
+        <div class="section-head reveal">
+          <h2>Featured events</h2>
+          <p>Hand-picked highlights you don't want to miss.</p>
+        </div>
+        <div class="grid featured-grid" id="featured-grid"></div>
+      </div>
+    </section>
+
+    <!-- ============ ALL EVENTS ============ -->
+    <section class="section alt" id="events">
+      <div class="container">
+        <div class="section-head reveal">
+          <h2>Upcoming events</h2>
+          <p>Search, filter and find the perfect event.</p>
+        </div>
+
+        <div class="toolbar reveal">
+          <div class="search">
+            <span aria-hidden="true">🔍</span>
+            <input type="search" id="search" placeholder="Search by name, venue or city…" aria-label="Search events" autocomplete="off" />
+          </div>
+          <select id="sort" aria-label="Sort events">
+            <option value="date">Sort: Soonest first</option>
+            <option value="price-asc">Price: Low to high</option>
+            <option value="price-desc">Price: High to low</option>
+            <option value="name">Name: A–Z</option>
+          </select>
+        </div>
+
+        <div class="chips" id="chips" role="group" aria-label="Filter by category"></div>
+        <p class="result-count" id="result-count" aria-live="polite"></p>
+
+        <div class="grid" id="events-grid"></div>
+
+        <div class="empty" id="empty" hidden>
+          <div class="empty-emoji">🗓️</div>
+          <h3>No events found</h3>
+          <p>Try a different keyword or category.</p>
+          <button class="btn btn-ghost" id="reset-filters">Reset filters</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ HOW IT WORKS ============ -->
+    <section class="section" id="how">
+      <div class="container">
+        <div class="section-head reveal"><h2>How it works</h2><p>Three simple steps to your seat.</p></div>
+        <div class="steps">
+          <div class="step reveal"><span>1</span><h3>Explore</h3><p>Browse or search events by category, date and price.</p></div>
+          <div class="step reveal"><span>2</span><h3>Register</h3><p>Open an event and fill a quick, validated form.</p></div>
+          <div class="step reveal"><span>3</span><h3>Get confirmed</h3><p>Receive an instant confirmation ID and manage bookings.</p></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="site-footer">
+    <div class="container foot">
+      <div>
+        <a href="#top" class="logo"><span class="logo-mark">E</span>Eventra</a>
+        <p class="muted">Discover. Register. Experience.</p>
+      </div>
+      <p class="muted">© <span id="year"></span> Eventra · Built with HTML5, CSS3 &amp; JavaScript</p>
+    </div>
+  </footer>
+
+  <!-- ============ EVENT DETAIL + REGISTRATION MODAL ============ -->
+  <div class="modal" id="event-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
+    <div class="modal-backdrop" data-close></div>
+    <div class="modal-panel">
+      <button class="modal-close" data-close aria-label="Close dialog">✕</button>
+
+      <div class="modal-body" id="modal-body">
+        <div class="detail">
+          <div class="detail-hero" id="detail-hero"></div>
+          <div class="detail-info">
+            <span class="tag" id="detail-tag"></span>
+            <h2 id="modal-title"></h2>
+            <ul class="meta" id="detail-meta"></ul>
+            <div class="countdown small" id="detail-countdown"></div>
+            <p id="detail-desc"></p>
+            <h4>Agenda</h4>
+            <ul class="agenda" id="detail-agenda"></ul>
+          </div>
+        </div>
+
+        <form class="reg-form" id="reg-form" novalidate>
+          <h3>Register for this event</h3>
+          <div class="seats-bar"><div id="seats-fill"></div></div>
+          <p class="muted small-text" id="seats-text"></p>
+
+          <div class="field">
+            <label for="f-name">Full name</label>
+            <input id="f-name" name="name" type="text" autocomplete="name" placeholder="e.g. Priya Sharma" />
+            <small class="error" id="e-name"></small>
+          </div>
+          <div class="field">
+            <label for="f-email">Email address</label>
+            <input id="f-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" />
+            <small class="error" id="e-email"></small>
+          </div>
+          <div class="field">
+            <label for="f-phone">Phone number</label>
+            <input id="f-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="10-digit mobile number" />
+            <small class="error" id="e-phone"></small>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="f-event">Selected event</label>
+              <select id="f-event" name="event"></select>
+              <small class="error" id="e-event"></small>
+            </div>
+            <div class="field">
+              <label for="f-tickets">Tickets</label>
+              <select id="f-tickets" name="tickets"></select>
+            </div>
+          </div>
+          <label class="check">
+            <input type="checkbox" id="f-terms" />
+            <span>I agree to the event terms &amp; conditions.</span>
+          </label>
+          <small class="error" id="e-terms"></small>
+
+          <div class="total-row"><span>Total</span><strong id="total">Free</strong></div>
+          <button type="submit" class="btn btn-primary btn-block" id="submit-btn">Confirm registration</button>
+        </form>
+
+        <div class="success" id="success" hidden>
+          <div class="check-anim" aria-hidden="true">✓</div>
+          <h3>You're registered! 🎉</h3>
+          <p id="success-text"></p>
+          <div class="ticket" id="ticket"></div>
+          <div class="success-actions">
+            <button class="btn btn-ghost" data-close>Close</button>
+            <button class="btn btn-primary" id="view-regs">View my registrations</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ MY REGISTRATIONS DRAWER ============ -->
+  <div class="drawer" id="drawer" hidden>
+    <div class="modal-backdrop" data-close-drawer></div>
+    <aside class="drawer-panel" role="dialog" aria-modal="true" aria-labelledby="drawer-title">
+      <div class="drawer-head">
+        <h3 id="drawer-title">My registrations</h3>
+        <button class="modal-close static" data-close-drawer aria-label="Close registrations">✕</button>
+      </div>
+      <div id="regs-list"></div>
+    </aside>
+  </div>
+
+  <div class="toast-wrap" id="toasts" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
