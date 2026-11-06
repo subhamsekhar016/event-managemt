@@ -2,7 +2,7 @@
 
 Eventra is a modern, fully responsive event management website where users can explore upcoming events, view detailed information, and register for the events they like. It is built with **HTML5, CSS3 and vanilla JavaScript** (no frameworks and no build step).
 
-- **Live website:** https://ephemeral-pony-165c6b.netlify.app
+- **Live website:** https://eventra-events-subham.netlify.app
 - **GitHub repository:** https://github.com/subhamsekhar016/eventra
 - **Author:** Subham Sekhar Patra
 
